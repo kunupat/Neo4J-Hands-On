@@ -26,13 +26,22 @@ MATCH (p1:Product:Food { name:"Pizza" })
 MATCH (p2:Product:Food { name:"Coke" })
 CREATE(c)-[r1:Bought{ date: '25/03/2018'}]->(p1)
 CREATE(c)-[r2:Bought{ date: '25/03/2018'}]->(p2)
-RETURN r1,r2;
+RETURN c,p1,p2,r1,r2;
 ```
 
 ## Update Customer Node
 ```
 MATCH (c:Customer:Person{name: "Barry"}) 
-SET c.loyalty_points = 100
-SET c.phone_number = 00000
+SET c.loyalty_points = 100, c.phone_number = 00000
 RETURN c
 ```
+
+## Delete Coke product and its relationship with Customer
+
+```
+MATCH (p:Product:Food { name:"Coke" }) 
+DETACH DELETE p
+
+```
+
+
