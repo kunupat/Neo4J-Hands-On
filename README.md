@@ -44,4 +44,38 @@ DETACH DELETE p
 
 ```
 
+# Second
 
+## Load movies DB
+```
+:play movies
+```
+
+## Check movies DB loaded- count movies ordering them by year of release (This one has to be corrected)
+```
+MATCH (m:Movie)  
+RETURN count(m)
+ORDER BY m.released
+```
+
+## Find all actors and their movie counts and order them by descending order of Movie Count
+```
+MATCH (m:Movie) <- [:ACTED_IN] - (p:Person) RETURN p, COUNT(m) as c ORDER BY c DESC
+```
+
+## Find the movies in which **Hugo Weaving** acted.
+
+```
+MATCH (m: Movie) <- [:ACTED_IN] - (p:Person {name: "Hugo Weaving"}) RETURN m,p
+```
+
+## Find all co-actors of **Hugo Weaving**
+```
+MATCH (coactor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (p:Person {name: "Hugo Weaving"}) RETURN coactor
+```
+
+## Find the actors who **DID NOT** act with **Hugo Weaving** but acted with his co-stars and `SET` a property **act** with value **didnot** on those actors. (WIP)
+```
+MATCH (actor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (coactor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (p:Person {name: "Hugo Weaving"})
+
+```
