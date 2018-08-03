@@ -90,9 +90,9 @@ CREATE(:Product {unitPrice: toFloat(line.unitPrice), unitsInStock: toInteger(lin
 ## Load Customers and Orders from URL
 ```
 LOAD CSV WITH HEADERS FROM "http://data.neo4j.com/northwind/customers.csv" as line
-CREATE(:Customer) RETURN COUNT(*);
+CREATE(:Customer {customerID: line.customerID,companyName:line.companyName,contactName:line.contactName,contactTitle: line.contactTitle,address:line.address, city: line.city,region:line.region,postalCode:line.postalCode,country:line.country,phone: line.phone, fax:line.fax }) RETURN COUNT(*);
 
 
 LOAD CSV WITH HEADERS FROM "http://data.neo4j.com/northwind/orders.csv" as line
-CREATE(:Order) RETURN COUNT(*);
+CREATE(:Order{orderID:line.orderID,customerID:line.customerID,employeeID:line.employeeID,orderDate:line.orderDate,requiredDate:line.requiredDate,shippedDate:line.shippedDate,shipVia:line.shipVia,freight:line.freight,shipName:line.shipName,shipAddress:line.shipAddress,shipCity:line.shipCity,shipRegion:line.shipRegion,shipPostalCode:line.shipPostalCode,shipCountry:line.shipCountry}) RETURN COUNT(*);
 ```
