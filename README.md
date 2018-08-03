@@ -81,3 +81,9 @@ WHERE NOT ((co_actors_of_co_actors_of_hugo:Person)-[:ACTED_IN]->(movies_of_hugo:
 
 RETURN DISTINCT co_actors_of_co_actors_of_hugo.name
 ```
+
+## Load Products from CSV
+```
+LOAD CSV WITH HEADERS FROM "file:///products.csv" As line
+CREATE(:Product {unitPrice: toFloat(line.unitPrice), unitsInStock: toInteger(line.unitsInStock),unitsOnOrder: toInteger(line.unitsOnOrder),reorderLevel: toInteger(line.reorderLevel)}) RETURN COUNT(*);
+```
