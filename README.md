@@ -87,3 +87,12 @@ RETURN DISTINCT co_actors_of_co_actors_of_hugo.name
 LOAD CSV WITH HEADERS FROM "file:///products.csv" As line
 CREATE(:Product {unitPrice: toFloat(line.unitPrice), unitsInStock: toInteger(line.unitsInStock),unitsOnOrder: toInteger(line.unitsOnOrder),reorderLevel: toInteger(line.reorderLevel)}) RETURN COUNT(*);
 ```
+## Load Customers and Orders from URL
+```
+LOAD CSV WITH HEADERS FROM "http://data.neo4j.com/northwind/customers.csv" as line
+CREATE(:Customer) RETURN COUNT(*);
+
+
+LOAD CSV WITH HEADERS FROM "http://data.neo4j.com/northwind/orders.csv" as line
+CREATE(:Order) RETURN COUNT(*);
+```
