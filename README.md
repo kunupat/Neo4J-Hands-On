@@ -74,12 +74,10 @@ MATCH (coactor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (p:Person {
 
 ## Find the actors who *DID NOT* act with *Hugo Weaving* but acted with his co-stars and `SET` a property *act* with value *didnot* on those actors. (WIP)
 ```
-MATCH
-(co_actors_of_co_actors_of_hugo:Person)-[:ACTED_IN]->(movies_of_co_actors_of_hugo:Movie)<-[:ACTED_IN]-(co_actors_of_hugo: Person)-[:ACTED_IN]->(movies_of_hugo: Movie)<-[:ACTED_IN]-(hugo:Person{name:"Hugo Weaving"})  
-
-WHERE NOT ((co_actors_of_co_actors_of_hugo:Person)-[:ACTED_IN]->(movies_of_hugo:Movie)) 
-
-RETURN DISTINCT co_actors_of_co_actors_of_hugo.name
+MATCH (hugo:Person {name:"Hugo Weaving"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors),
+      (coActors)-[:ACTED_IN]->(m2)<-[:ACTED_IN]-(cocoActors)
+WHERE NOT (hugo)-[:ACTED_IN]->()<-[:ACTED_IN]-(cocoActors) AND hugo <> cocoActors
+SET cocoActors.act= "didnot"
 ```
 
 ## Load Products from CSV
