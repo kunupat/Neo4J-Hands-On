@@ -74,7 +74,7 @@ MATCH (m: Movie) <- [:ACTED_IN] - (p:Person {name: "Hugo Weaving"}) RETURN m,p
 MATCH (coactor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (p:Person {name: "Hugo Weaving"}) RETURN coactor
 ```
 
-## Find the actors who **DID NOT** act with **Hugo Weaving** but acted with his co-stars and `SET` a property **act** with value **didnot** on those actors. (WIP)
+## Find the actors who *DID NOT* act with *Hugo Weaving* but acted with his co-stars and `SET` a property *act* with value *didnot* on those actors. (WIP)
 ```
 MATCH (actor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (coactor: Person) - [:ACTED_IN] -> (m: Movie) <- [:ACTED_IN] - (p:Person {name: "Hugo Weaving"})
 
