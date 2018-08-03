@@ -79,6 +79,12 @@ MATCH (hugo:Person {name:"Hugo Weaving"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActor
 WHERE NOT (hugo)-[:ACTED_IN]->()<-[:ACTED_IN]-(cocoActors) AND hugo <> cocoActors
 SET cocoActors.act= "didnot"
 ```
+## Find actors who can introduce Hugo Weaving to Charlize Theron and set a property `introduction` to value `can` on them
+```
+MATCH (hugo:Person {name:"Hugo Weaving"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors),
+      (coActors)-[:ACTED_IN]->(m2)<-[:ACTED_IN]-(theron:Person {name:"Charlize Theron"})
+SET coActors.introduction = "can"
+```
 
 ## Load Products from CSV
 ```
