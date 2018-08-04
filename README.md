@@ -106,3 +106,10 @@ CREATE(:Order{orderID:line.orderID,customerID:line.customerID,employeeID:line.em
 LOAD CSV WITH HEADERS FROM "http://data.neo4j.com/northwind/order-details.csv" As line
 CREATE (o)-[:ORDERS {quantity:toInteger(line.quantity)}]->(p)
 ```
+
+## Find the Customers who have purchased more than 1000 products from all their orders and give them a label as :Top_Customer
+```
+MATCH (cust:Customer)-[:PURCHASED]->(:Order)-[o:ORDERS]->(p:Product) WITH cust as cust, SUM(o.quantity) AS TotalProductsPurchased
+WHERE TotalProductsPurchased > 1000
+SET cust:Top_Customer
+```
